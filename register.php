@@ -1,79 +1,63 @@
-<?php 
-session_start();
-$db = mysqli_connect("localhost", "root", "root", "ecommers");
-if(isset($_POST['bottin'])){
-	session_start();
-	$username = ($_POST['username']);
-	$email = ($_POST['email']);
-	$password = ($_POST['password']);
-	$password2 =($_POST['password2']);
+<?php
+	include "connect.php";
 
-	if($password == $password2){
-		$password = md5($password);
-		$sql = "INSERT INTO users (username, email, password) VALUES('$username', '$email', '$password')";
-			mysqli_query($db, $sql);
-		$_SESSION['message'] = "You are now loggid in";
-		$_SESSION['username'] = $username;
-		header("location: home.php");
-	} else {
-		$_SESSION['message'] = "the two passwords do not match";
+	if (isset($_POST['bottin'])){
+		if (empty($_POST['ism'])){
+			echo "Ism po'lya bo'sh bo'lmasligi kerak";
+			die();
+		} else {
+			$ism = $_POST['ism'];
+			if (!preg_match("/^[a-zA-Z]*$/", $ism)){
+				echo "Ism polyaga faqatgina a-zA-Z gacha hariflar ishlatiladi";
+				die();
+			}
+		}
+
+
+		if (empty($_POST['familya'])){
+			echo "familya po'lya bo'sh bo'lmasligi kerak";
+			die();
+		} else {
+			$familya = $_POST['familya'];
+			if (!preg_match("/^[a-zA-Z]*$/", $familya)){
+				echo "familya polyaga faqatgina a-zA-Z gacha hariflar ishlatiladi";
+				die();
+			}
+		}
+
+
+		if (empty($_POST['email'])){
+			echo "email po'lya bo'sh bo'lmasligi kerak";
+			die();
+		} else {
+			$email = $_POST['email'];
+			if (!preg_match("/^[a-zA-Z.@]*$/", $email)){
+				echo "email polyaga faqatgina a-zA-Z gacha hariflar ishlatiladi";
+				die();
+			}
+		}
+
+
+
+		if (empty($_POST['parol'])){
+			echo "parol po'lya bo'sh bo'lmasligi kerak";
+			die();
+		} else {
+			$parol = $_POST['parol'];
+			if (!preg_match("/^[0-9]*$/", $parol)){
+				echo "parol polyaga faqatgina a-zA-Z gacha hariflar ishlatiladi";
+				die();
+			}
+		}
+		$sql = "INSERT INTO users (ism, familya, email, parol) VALUES ('$ism', '$familya', '$email', '$parol')";
+
+		$result = mysqli_query($connect, $sql);
+		if ($result) {
+			echo "malumot tushirildi";
+		} else {
+			echo "malumot yo'q";
+		}
 	}
 
-}
+
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Ro'yxatdan o'tish oynasi</title>
-</head>
-<body>
-<form  action="login.php" method="POST" >
-<input type="text" name="ism" placeholder="Ism" maxlength="15" minlength="4" required>
-<br><br>
-<input type="text" name="familya" placeholder="Familya" maxlength="18" minlength="4" required>
-<br><br>
-<input type="email" name="email" placeholder="Email" required><br><br>
-<input type="password" minlength="8" maxlength="16" name="parol" placeholder="Porol" required><br><br>
-<input type="password" minlength="8" maxlength="16" name="parol" placeholder="Porolni takrorlang" required><br><br>
-<button type="submit" name="bottin">Jo'natish</button> 
-</form>
-<style type="text/css">
-	body {
-		background-color: lightblue;
-	}
-	form {
-		background-color: white;
-		width: 300px;
-		padding: 60px;
-		margin: 0px auto ;
-		margin-top: 100px;
-		border-top-left-radius: 100px;
-		border-bottom-right-radius: 100px;
-		text-align: center;
-		font-family: cursive;
-		font-size: 20px;
-		box-shadow: 3px 5px 12px grey;
-
-	}
-	form input {
-		border: none;
-		border-bottom: 2px solid lightblue;
-		padding: 6px;
-		width: 70%;
-		outline: none;
-	}
-	form button {
-		border: none;
-		background: linear-gradient(90deg, yellow, green);
-		padding: 8px 60px;
-		color: white;
-		border-radius: 30px;
-		font-size: 16px;
-	}
-
-
-</style>
-</body>
-</html>
- 

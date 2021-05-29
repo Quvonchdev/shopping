@@ -3,19 +3,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Ro'yxatdan o'tish oynasi</title>
+	<title>Kirish</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-<form  action="login.php" method="POST" >
-<input type="text" name="ism" placeholder="Ism" maxlength="15" minlength="4" required>
-<br><br>
-<input type="text" name="familya" placeholder="Familya" maxlength="18" minlength="4" required>
-<br><br>
+	<div class="header">
+		<h1>O'zingizni tasdiqlang</h1>
+	</div>
+
+
+
+<form  action="view.php" method="POST" >
+
 <input type="email" name="email" placeholder="Email" required><br><br>
 <input type="password" minlength="8" maxlength="16" name="parol" placeholder="Porol" required><br><br>
-<input type="password" minlength="8" maxlength="16" name="parol" placeholder="Porolni takrrlang" required><br><br>
-<button type="submit" name="bottin">Jo'natish</button> 
+<button type="submit" name="bottin">Tasdiqlash</button> 
+<a href="registratsiya.html"><p>Ro'yxatdan o'tish</p></a>
 </form>
+
 <style type="text/css">
 	body {
 		background-color: lightblue;
@@ -54,4 +59,3 @@
 </style>
 </body>
 </html>
- 
