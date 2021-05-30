@@ -12,14 +12,16 @@ include "connect.php";
 
 		$sql = "SELECT * FROM users WHERE email = '$email' and parol = '$parol'";
 		
+		$result = mysqli_query($connect, $sql);
 
-
-	if ($result = mysqli_query($connect, $sql)) {
+	if ($result) {
+		$sql2 = "SELECT * FROM users WHERE email = '$email' and parol = '$parol'";
+		$result2 = mysqli_query($connect, $sql2);
+		$a = mysqli_fetch_assoc($result2);
+		echo "malumot chiqdi ". $a['ism'];
 		
-		header('location: register.php');
-		exit(0);
 	} else {
-		$_SESSION['message'] = "email/parol combination incorrect";
+		echo "malumot yoq";
 	}
 	}
 
