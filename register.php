@@ -1,6 +1,6 @@
 <?php
 	include "connect.php";
-
+	
 	if (isset($_POST['bottin'])){
 		if (empty($_POST['ism'])){
 			echo "Ism po'lya bo'sh bo'lmasligi kerak";
@@ -31,7 +31,7 @@
 			die();
 		} else {
 			$email = $_POST['email'];
-			if (!preg_match("/^[a-zA-Z.@]*$/", $email)){
+			if (!preg_match("/^[a-zA-Z0-9.@]*$/", $email)){
 				echo "email polyaga faqatgina a-zA-Z gacha hariflar ishlatiladi";
 				die();
 			}
@@ -44,19 +44,32 @@
 			die();
 		} else {
 			$parol = $_POST['parol'];
-			if (!preg_match("/^[0-9]*$/", $parol)){
+			
+			if (!preg_match("/^[a-zA-Z0-9]*$/", $parol)){
 				echo "parol polyaga faqatgina a-zA-Z gacha hariflar ishlatiladi";
 				die();
 			}
 		}
-		$sql = "INSERT INTO users (ism, familya, email, parol) VALUES ('$ism', '$familya', '$email', '$parol')";
 
-		$result = mysqli_query($connect, $sql);
-		if ($result) {
-			echo "malumot tushirildi";
+		$sql2 = "SELECT * FROM users WHERE ism = '$ism'";
+		$result2 = mysqli_query($connect, $sql2);
+		$conn = mysqli_fetch_assoc($result2);
+
+		if ($conn){
+			echo "bunday yusername saqlangan boshqa username kiriting";
+			die();
 		} else {
-			echo "malumot yo'q";
+			$pass = md5($parol);
+			$sql = "INSERT INTO users (ism, familya, email, parol) VALUES ('$ism', '$familya', '$email', '$pass')";
+
+			$result = mysqli_query($connect, $sql);
+			if ($result) {
+			
+			header('location: login.php');
 		}
+		}
+		
+		 
 	}
 
 
